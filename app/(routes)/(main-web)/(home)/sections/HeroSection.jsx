@@ -15,7 +15,7 @@ export default function HeroSection() {
 			whileInView="show"
 			viewport={{ once: true }}
 			variants={viewportShowingMotion()}
-			className="relative bg-neutral-dark-900 overflow-hidden h-dvh"
+			className="relative bg-neutral-dark-900 overflow-hidden flex flex-col h-dvh"
 		>
 			{/* background decorative elements */}
 			<div className="absolute inset-0 opacity-10">
@@ -23,7 +23,7 @@ export default function HeroSection() {
 				<div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary rounded-full blur-[120px]" />
 			</div>
 
-			<div className="container h-full flex justify-center items-center">
+			<div className="container flex-1 flex flex-col justify-center items-center">
 				<div className="max-w-screen-lg mx-auto space-y-8">
 					{/* caption */}
 					<SpanText
@@ -68,7 +68,7 @@ export default function HeroSection() {
 							<span className="block text-nowrap">
 								Explore Events
 							</span>
-							<RightArrowSVGIcon className="size-4 sm:size-4.5 lg:size-5 2xl:size-[1.375rem] flex-none" />
+							<RightArrowSVGIcon className="size-4 sm:size-4.5 lg:size-5 flex-none" />
 						</ContainedButton>
 					</div>
 				</div>

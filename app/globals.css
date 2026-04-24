@@ -19,7 +19,7 @@
 		@apply capitalize text-xs sm:text-sm lg:text-base text-primary hover:text-neutral-dark-800 select-none touch-manipulation active:!scale-[0.97] will-change-transform transition-all duration-300;
 	}
 	.btn-outlined {
-		@apply capitalize text-xs sm:text-sm lg:text-base px-3 py-1.5 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-transparent text-primary hover:text-neutral-dark-800 border border-primary hover:border-neutral-dark-800 rounded-xl select-none touch-manipulation active:!scale-[0.97] will-change-transform transition-all duration-300;
+		@apply btn-contained !bg-transparent !text-primary hover:!text-neutral-dark-800 !border-primary hover:!border-neutral-dark-800;
 	}
 }
 

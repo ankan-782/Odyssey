@@ -47,7 +47,7 @@ export default function ErrorContent({ error, reset }) {
 						buttonExtraClassNames="flex items-center gap-2 btn-contained"
 					>
 						<span className="block text-nowrap">Return Home</span>
-						<RightArrowSVGIcon className="size-4 sm:size-4.5 lg:size-5 2xl:size-[1.375rem] flex-none" />
+						<RightArrowSVGIcon className="size-4 sm:size-4.5 lg:size-5 flex-none" />
 					</ContainedButton>
 				</div>
 			</div>

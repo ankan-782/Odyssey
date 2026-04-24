@@ -32,7 +32,7 @@ export default function NotFoundContent() {
 						buttonContainerExtraClassNames="w-fit mx-auto"
 					>
 						<span className="block text-nowrap">Return Home</span>
-						<RightArrowSVGIcon className="size-4 sm:size-4.5 lg:size-5 2xl:size-[1.375rem] flex-none" />
+						<RightArrowSVGIcon className="size-4 sm:size-4.5 lg:size-5 flex-none" />
 					</ContainedButton>
 				</div>
 			</div>
