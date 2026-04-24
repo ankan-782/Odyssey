@@ -20,7 +20,7 @@ export default async function Icon() {
 		// ImageResponse JSX element
 		// <img
 		// 	src={`${IMAGE_URL}/${favicon}`}
-		// 	alt="B"
+		// 	alt="O"
 		// 	width="32"
 		// 	height="32"
 		// />
@@ -37,7 +37,7 @@ export default async function Icon() {
 				color: "white",
 			}}
 		>
-			B
+			O
 		</div>,
 		// ImageResponse options
 		{

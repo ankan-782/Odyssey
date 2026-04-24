@@ -7,9 +7,10 @@ import {
 } from "@/app/_shared/lib/project-constant-data";
 import PageTopContent from "@/app/_shared/sections/page-top-content/PageTopContent";
 
-// export async function generateMetadata() {
-// 	return getMetaData("privacy-policy");
-// }
+export const metadata = {
+	title: "Privacy Policy — Odyssey Events",
+	description: "This is the privacy policy page for Odyssey Events.",
+};
 
 export default async function PrivacyPolicyPage() {
 	// const privacyPolicyStaticPageData =

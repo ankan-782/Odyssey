@@ -7,9 +7,10 @@ import {
 } from "@/app/_shared/lib/project-constant-data";
 import PageTopContent from "@/app/_shared/sections/page-top-content/PageTopContent";
 
-// export async function generateMetadata() {
-// 	return getMetaData("return-refund-policy");
-// }
+export const metadata = {
+	title: "Return & Refund Policy — Odyssey Events",
+	description: "This is the return & refund policy page for Odyssey Events.",
+};
 
 export default async function ReturnRefundPolicyPage() {
 	// const returnRefundPolicyStaticPageData = await getStaticPagesData(

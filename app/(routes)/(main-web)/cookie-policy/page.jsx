@@ -7,9 +7,10 @@ import {
 } from "@/app/_shared/lib/project-constant-data";
 import PageTopContent from "@/app/_shared/sections/page-top-content/PageTopContent";
 
-// export async function generateMetadata() {
-// 	return getMetaData("cookie-policy");
-// }
+export const metadata = {
+	title: "Cookie Policy — Odyssey Events",
+	description: "This is the cookie policy page for Odyssey Events.",
+};
 
 export default async function CookiePolicyPage() {
 	// const cookiePolicyStaticPageData =

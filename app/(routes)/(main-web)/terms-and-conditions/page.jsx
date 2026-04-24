@@ -7,9 +7,10 @@ import {
 } from "@/app/_shared/lib/project-constant-data";
 import PageTopContent from "@/app/_shared/sections/page-top-content/PageTopContent";
 
-// export async function generateMetadata() {
-// 	return getMetaData("terms-and-conditions");
-// }
+export const metadata = {
+	title: "Terms and Conditions — Odyssey Events",
+	description: "This is the terms and conditions page for Odyssey Events.",
+};
 
 export default async function TermsAndConditionsPage() {
 	// const termsAndConditionsStaticPageData = await getStaticPagesData(
