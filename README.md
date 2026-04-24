@@ -16,34 +16,202 @@ A personal starter kit to skip the boring setup, coming with Next.js 14, Tailwin
 
 ## Project Structure
 ```text
-├── app/
-│   ├── (routes)/                # Route groups separating distinct website areas
-│   │   ├── (admin-web)/         # Admin portal routes
-│   │   └── (main-web)/          # Public-facing website routes
-│   ├── _shared/                 # Centralized shared application logic and UI
-│   │   ├── components/          # Categorized, reusable React components
-│   │   ├── contexts/            # React Context providers (e.g., Navigation)
-│   │   ├── hooks/               # Custom React hooks
-│   │   ├── layout/              # Header and Footer layout component wrappers
-│   │   ├── lib/                 # Constants, helpers, theme, and config files
-│   │   ├── sections/            # Reusable page sections
-│   │   └── service/             # API interaction services
-│   ├── error.jsx                # Global error boundary component
-│   ├── global-error.jsx         # Fallback error boundary for the root document
-│   ├── globals.css              # Tailwind directives and global CSS overrides
-│   ├── icon.js                  # Dynamic favicon generator (using next/og)
-│   ├── layout.jsx               # Root HTML/Body layout and font injection
-│   ├── loading.jsx              # Global loading suspense fallback
-│   └── not-found.jsx            # Custom 404 Not Found page
-├── public/                      # Static assets served at the root
-│   ├── fonts/                   # Local font files (.woff)
-│   ├── images/                  # Standard image assets
-│   └── logos-icons/             # Project logos, badges, and social icons
-├── .eslintrc.json               # ESLint configuration
-├── jsconfig.json                # Path aliasing configuration (@/* -> ./*)
-├── next.config.mjs              # Next.js configuration (e.g., remote image patterns)
-├── package.json                 # Project dependencies and npm scripts
-└── tailwind.config.js           # Tailwind CSS theme extensions and plugin config
+odyssey-next-project
+├─ .eslintrc.json
+├─ app
+│  ├─ (routes)
+│  │  ├─ (admin-web)
+│  │  │  ├─ admin
+│  │  │  │  └─ page.jsx
+│  │  │  ├─ layout.jsx
+│  │  │  └─ loading.jsx
+│  │  └─ (main-web)
+│  │     ├─ (auth)
+│  │     │  └─ login
+│  │     │     └─ page.jsx
+│  │     ├─ (home)
+│  │     │  ├─ home
+│  │     │  │  └─ page.jsx
+│  │     │  ├─ page.jsx
+│  │     │  └─ sections
+│  │     │     ├─ CategoriesSection.jsx
+│  │     │     ├─ FeaturedEventsSection.jsx
+│  │     │     ├─ HeroSection.jsx
+│  │     │     ├─ StatsSection.jsx
+│  │     │     └─ TestimonialsSection.jsx
+│  │     ├─ (protected)
+│  │     │  └─ events
+│  │     │     ├─ add
+│  │     │     │  └─ page.jsx
+│  │     │     └─ manage
+│  │     │        └─ page.jsx
+│  │     ├─ about
+│  │     │  ├─ page.jsx
+│  │     │  └─ sections
+│  │     │     └─ AboutSection.jsx
+│  │     ├─ cookie-policy
+│  │     │  └─ page.jsx
+│  │     ├─ events
+│  │     │  ├─ page.jsx
+│  │     │  ├─ sections
+│  │     │  │  └─ EventsSection.jsx
+│  │     │  └─ [id]
+│  │     │     └─ page.jsx
+│  │     ├─ layout.jsx
+│  │     ├─ loading.jsx
+│  │     ├─ privacy-policy
+│  │     │  └─ page.jsx
+│  │     ├─ return-refund-policy
+│  │     │  └─ page.jsx
+│  │     └─ terms-and-conditions
+│  │        └─ page.jsx
+│  ├─ error.jsx
+│  ├─ global-error.jsx
+│  ├─ globals.css
+│  ├─ icon.js
+│  ├─ layout.jsx
+│  ├─ loading.jsx
+│  ├─ not-found.jsx
+│  └─ _shared
+│     ├─ components
+│     │  ├─ buttons-links
+│     │  │  ├─ ContainedButton.jsx
+│     │  │  ├─ CustomLink.jsx
+│     │  │  ├─ IconButton.jsx
+│     │  │  ├─ OutlinedButton.jsx
+│     │  │  └─ TextButton.jsx
+│     │  ├─ cards
+│     │  │  ├─ CategoryCard.jsx
+│     │  │  ├─ EventCard.jsx
+│     │  │  ├─ StatCard.jsx
+│     │  │  └─ TestimonialCard.jsx
+│     │  ├─ common-in-pages
+│     │  │  ├─ BulletPoints.jsx
+│     │  │  ├─ DownloadAppSourceList.jsx
+│     │  │  ├─ MultipleElementPreview.jsx
+│     │  │  ├─ MultipleImagePreview.jsx
+│     │  │  ├─ ProfileImage.jsx
+│     │  │  ├─ ScrollableLabel.jsx
+│     │  │  ├─ SocialNavList.jsx
+│     │  │  └─ Tabs.jsx
+│     │  ├─ common-wrapper
+│     │  │  ├─ AntdGlobalConfigProviderWrapper.jsx
+│     │  │  ├─ BaseMotionConfig.jsx
+│     │  │  ├─ CardsLayout.jsx
+│     │  │  └─ ContainerWrapper.jsx
+│     │  ├─ forms
+│     │  │  ├─ EventForm.jsx
+│     │  │  └─ SubscribeForm.jsx
+│     │  ├─ texts
+│     │  │  ├─ Caption.jsx
+│     │  │  ├─ Description.jsx
+│     │  │  ├─ RichtextDescription.jsx
+│     │  │  ├─ SpanText.jsx
+│     │  │  └─ Title.jsx
+│     │  └─ ui
+│     │     ├─ ComingSoonContent.jsx
+│     │     ├─ ErrorContent.jsx
+│     │     ├─ GlobalErrorContent.jsx
+│     │     ├─ Icons.jsx
+│     │     ├─ LoaderContent.jsx
+│     │     ├─ NotFoundContent.jsx
+│     │     ├─ Rating.jsx
+│     │     └─ ScrollProgressIndicator.jsx
+│     ├─ contexts
+│     │  ├─ AuthContextProvider.jsx
+│     │  ├─ EventContextProvider.jsx
+│     │  └─ NavigationContextProvider.jsx
+│     ├─ hooks
+│     │  ├─ useApiCall.js
+│     │  ├─ useAutoScrollLabel.js
+│     │  ├─ useDebounce.js
+│     │  ├─ useIntersectionObserver.js
+│     │  ├─ useScrollSpy.js
+│     │  ├─ useShowModal.js
+│     │  ├─ useShowToastMessage.js
+│     │  ├─ useViewportHeight.js
+│     │  └─ useViewportWidth.js
+│     ├─ layout
+│     │  ├─ footer
+│     │  │  ├─ components
+│     │  │  │  ├─ ContactInfo.jsx
+│     │  │  │  ├─ FooterHelpLinks.jsx
+│     │  │  │  ├─ FooterLogo.jsx
+│     │  │  │  ├─ FooterQuickLinks.jsx
+│     │  │  │  ├─ FooterSubMenuDropdown.jsx
+│     │  │  │  ├─ SecondaryFooterBorder.jsx
+│     │  │  │  ├─ SecondaryFooterContent.jsx
+│     │  │  │  ├─ SSLCommerzBanner.jsx
+│     │  │  │  └─ Subscribe.jsx
+│     │  │  ├─ FooterWrapper.jsx
+│     │  │  └─ sections
+│     │  │     ├─ PrimaryFooter.jsx
+│     │  │     └─ SecondaryFooter.jsx
+│     │  └─ header
+│     │     ├─ components
+│     │     │  ├─ HeaderContent.jsx
+│     │     │  ├─ HeaderContentLinks.jsx
+│     │     │  ├─ HeaderLogo.jsx
+│     │     │  ├─ HeaderNavigationSidebarContent.jsx
+│     │     │  ├─ HeaderNavigationSidebarLinks.jsx
+│     │     │  ├─ HeaderNavigationSidebarSubMenuDropdown.jsx
+│     │     │  ├─ HeaderSubMenuDropdownAfterHover.jsx
+│     │     │  └─ HeaderSwitchButton.jsx
+│     │     └─ HeaderWrapper.jsx
+│     ├─ lib
+│     │  ├─ api-url-constant-data.js
+│     │  ├─ events-data.js
+│     │  ├─ font-data.js
+│     │  ├─ helper-data.js
+│     │  ├─ motion-configuration-data.js
+│     │  ├─ project-constant-data.js
+│     │  ├─ project-file-data.js
+│     │  ├─ seo-handler-data.js
+│     │  └─ theme-data.js
+│     ├─ sections
+│     │  └─ page-top-content
+│     │     └─ PageTopContent.jsx
+│     └─ service
+│        ├─ contact-service.js
+│        ├─ site-config-service.js
+│        ├─ static-page-service.js
+│        ├─ subscribe-service.js
+│        └─ upload-service.js
+├─ jsconfig.json
+├─ next.config.mjs
+├─ odyssey-next.js-assessment-task.md
+├─ package-lock.json
+├─ package.json
+├─ postcss.config.mjs
+├─ public
+│  ├─ fonts
+│  │  ├─ ClashDisplay-Variable.woff
+│  │  ├─ GeistMonoVF.woff
+│  │  └─ GeistVF.woff
+│  ├─ images
+│  │  ├─ eps-banner-dark.png
+│  │  ├─ eps-banner-light.png
+│  │  └─ sslcommerz-banner.png
+│  └─ logos-icons
+│     ├─ address-icon.png
+│     ├─ app-store-download-badge.svg
+│     ├─ dribble-icon.png
+│     ├─ email-icon.png
+│     ├─ facebook-icon.png
+│     ├─ favicon.ico
+│     ├─ instagram-icon.png
+│     ├─ linkedin-icon.png
+│     ├─ phone-icon.png
+│     ├─ play-store-download-badge.png
+│     ├─ website-footer-logo-black.png
+│     ├─ website-footer-logo-white.png
+│     ├─ website-header-logo-black.png
+│     ├─ website-header-logo-white.png
+│     ├─ whatsapp-icon.png
+│     ├─ x-icon.png
+│     └─ youtube-icon.png
+├─ README.md
+└─ tailwind.config.js
 ```
 
 ## Architecture & Routing
