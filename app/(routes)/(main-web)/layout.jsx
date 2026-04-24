@@ -68,7 +68,7 @@ export default async function MainWebLayout({ children }) {
 	const emailAddresses = [
 		{ dept: "Support", email: "royavijit782@gmail.com" },
 	];
-	const phoneNumbers = [{ dept: "Sales", phone: "+8801636456927" }];
+	const phoneNumbers = [{ dept: "Business", phone: "+8801636456927" }];
 	const locations = [
 		{
 			area: "#3 Wasa Road",

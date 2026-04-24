@@ -4,6 +4,7 @@ import ContainerWrapper from "@/app/_shared/components/common-wrapper/ContainerW
 import Description from "@/app/_shared/components/texts/Description";
 import Title from "@/app/_shared/components/texts/Title";
 import { EventContext } from "@/app/_shared/contexts/EventContextProvider";
+import useDebounce from "@/app/_shared/hooks/useDebounce";
 import { EVENT_CATEGORIES } from "@/app/_shared/lib/events-data";
 import { viewportShowingMotion } from "@/app/_shared/lib/motion-configuration-data";
 import { Input, Select } from "antd";
@@ -21,12 +22,17 @@ export default function EventsSection() {
 	const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 	const [priceFilter, setPriceFilter] = useState("all");
 
+	const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+	const handleSearchDebounced = useDebounce((value) => {
+		setDebouncedSearchQuery(value);
+	}, 500);
+
 	const filteredEvents = useMemo(() => {
 		return events.filter((event) => {
 			// search filter
 			const matchesSearch = event.title
 				.toLowerCase()
-				.includes(searchQuery.toLowerCase());
+				.includes(debouncedSearchQuery.toLowerCase());
 
 			// category filter
 			const matchesCategory =
@@ -41,7 +47,7 @@ export default function EventsSection() {
 
 			return matchesSearch && matchesCategory && matchesPrice;
 		});
-	}, [events, searchQuery, selectedCategory, priceFilter]);
+	}, [events, debouncedSearchQuery, selectedCategory, priceFilter]);
 
 	return (
 		<motion.section
@@ -76,7 +82,11 @@ export default function EventsSection() {
 						<Input
 							placeholder="Search events by title..."
 							value={searchQuery}
-							onChange={(e) => setSearchQuery(e.target.value)}
+							onChange={(e) => {
+								const value = e.target.value;
+								setSearchQuery(value);
+								handleSearchDebounced(value);
+							}}
 							allowClear
 							className="flex-1 h-10"
 						/>
