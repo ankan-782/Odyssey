@@ -1,0 +1,12 @@
+import RootPage from "../page";
+
+// metadata
+export const metadata = {
+	title: "Odyssey Events — Discover Amazing Events",
+	description:
+		"Browse conferences, workshops, concerts, and more. Join thousands of attendees and create unforgettable experiences with Odyssey Events.",
+};
+
+export default function HomePage() {
+	return <RootPage />;
+}

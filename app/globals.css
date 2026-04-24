@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.btn-contained {
+		@apply capitalize text-xs sm:text-sm lg:text-base px-3 py-1.5 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-primary hover:bg-neutral-dark-800 text-neutral-bright-100 border border-primary hover:border-transparent rounded-xl select-none touch-manipulation active:!scale-[0.97] will-change-transform transition-all duration-300;
+	}
+	.btn-header-menu-contained {
+		@apply btn-contained !text-xs lg:!text-sm !px-3 !py-1.5 lg:!px-4 lg:!py-2 rounded-lg lg:rounded-xl text-primary hover:text-neutral-bright-100 bg-transparent hover:bg-primary border-transparent hover:border-primary;
+	}
+	.btn-sidebar-menu-contained {
+		@apply btn-contained !text-sm !px-3 !py-1.5 rounded-lg text-neutral-bright-100 bg-transparent hover:bg-primary border-transparent hover:border-primary;
+	}
+	.btn-form-contained {
+		@apply btn-contained !bg-primary hover:!bg-neutral-dark-800 !text-neutral-bright-100 !border-primary hover:!border-transparent w-full h-full;
+	}
+	.btn-text {
+		@apply capitalize text-xs sm:text-sm lg:text-base text-primary hover:text-neutral-dark-800 select-none touch-manipulation active:!scale-[0.97] will-change-transform transition-all duration-300;
+	}
+	.btn-outlined {
+		@apply capitalize text-xs sm:text-sm lg:text-base px-3 py-1.5 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-transparent text-primary hover:text-neutral-dark-800 border border-primary hover:border-neutral-dark-800 rounded-xl select-none touch-manipulation active:!scale-[0.97] will-change-transform transition-all duration-300;
+	}
+}
+
+@layer utilities {
+	/* Base scrollbar styles */
+	/* custom scrollbar - hover to appear smoothly */
+	.custom-scrollbar {
+		scrollbar-width: thin; /* Firefox */
+		scrollbar-color: transparent transparent; /* Firefox */
+		transition: scrollbar-color 0.3s ease;
+	}
+
+	/* WebKit scrollbar styles */
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+		background-color: transparent;
+		transition: all 0.3s ease;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background-color: transparent;
+		border-radius: 12px;
+		transition: background-color 0.3s ease;
+	}
+
+	/* Hover states */
+	.custom-scrollbar:hover {
+		scrollbar-color: #4640de transparent; /* Firefox */
+	}
+
+	.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+		background-color: #4640de;
+	}
+
+	/* hidden scrollbar - hide scrollbar completely */
+	/* Chrome, Safari and Opera */
+	.hidden-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* IE, Edge and Firefox */
+	.hidden-scrollbar {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+}
+
+/* swiper classes */
+/* swiper navigation classes */
+.swiper-button-prev,
+.swiper-button-next {
+	width: 36px !important;
+	height: 36px !important;
+	background-color: #25324b;
+	opacity: 0.4;
+	border: 0.5px solid #d6ddeb;
+	border-radius: 8px;
+	transition: all 0.3s ease;
+	color: #d6ddeb !important;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+	font-size: 14px !important;
+	font-weight: bold;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+	opacity: 1;
+}
+
+@media (min-width: 1024px) {
+	.swiper-button-prev,
+	.swiper-button-next {
+		width: 56px !important;
+		height: 56px !important;
+		border-radius: 12px;
+	}
+
+	.swiper-button-prev::after,
+	.swiper-button-next::after {
+		font-size: 20px !important;
+	}
+}
+
+/* antd classes */
+/* antd checkbox */
+.ant-checkbox-wrapper {
+	display: flex !important;
+	align-items: start !important;
+}
+.ant-checkbox-wrapper .ant-checkbox {
+	align-self: auto !important;
+	/* margin-top: 2px !important; */
+}
+.ant-checkbox-wrapper .ant-checkbox .ant-checkbox-inner {
+	width: 18px !important;
+	height: 18px !important;
+	border-radius: 6px !important;
+}
+
+@media (min-width: 576px) {
+	.ant-checkbox-wrapper .ant-checkbox .ant-checkbox-inner {
+		width: 20px !important;
+		height: 20px !important;
+	}
+}
+
+@media (min-width: 1024px) {
+	.ant-checkbox-wrapper .ant-checkbox .ant-checkbox-inner {
+		width: 22px !important;
+		height: 22px !important;
+	}
+}
+
+/* antd image */
+.ant-image-preview-close {
+	top: 20px;
+	right: 10px;
+	transition: 0.3s ease-in-out;
+}
+
+.ant-image-preview-close:active {
+	transform: scale(0.9);
+	will-change: transform;
+}
+
+.ant-image {
+	position: relative;
+	cursor: pointer;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.ant-image img {
+	transition-property: transform;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 300ms;
+}
+
+.ant-image:hover img {
+	transform: scale(1.1);
+}
+
+.ant-image::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background-color: rgba(37, 50, 75, 0.6);
+	opacity: 0;
+	transition-property: opacity;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 300ms;
+}
+
+.ant-image:hover::before {
+	opacity: 1;
+}
+
+.ant-image::after {
+	content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor" style="color: rgb(255, 255, 255);"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>');
+	display: block;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 2;
+	transform: translate(-50%, -50%);
+	opacity: 0;
+	transition-property: opacity;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 300ms;
+}
+
+.ant-image:hover::after {
+	opacity: 1;
+}
+
+.ant-image-mask {
+	display: none !important;
+}
+
+/* antd form */
+/* antd form label */
+.ant-form-item-label {
+	padding: 0 0 2px !important;
+}
+
+@media (min-width: 576px) {
+	.ant-form-item-label {
+		padding: 0 0 3px !important;
+	}
+}
+
+@media (min-width: 1024px) {
+	.ant-form-item-label {
+		padding: 0 0 4px !important;
+	}
+}
+
+@media (min-width: 1472px) {
+	.ant-form-item-label {
+		padding: 0 0 5px !important;
+	}
+}
+
+/* antd popover */
+.ant-popover-open {
+	@apply btn-contained w-full font-normal !bg-neutral-bright-100 !text-neutral-dark-800 border-none lg:py-2.5 2xl:py-2.5 hover:!scale-105 active:!scale-100 flex items-center justify-center gap-2;
+}
+
+/* antd pagination */
+.ant-pagination .ant-pagination-item {
+	border: none !important;
+}
