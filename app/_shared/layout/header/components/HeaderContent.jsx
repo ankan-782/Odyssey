@@ -24,7 +24,8 @@ export default function HeaderContent({ data }) {
 				key: "1",
 				label: (
 					<div className="text-neutral-dark-800 font-semibold mb-1 border-b border-neutral-bright-200 pb-1">
-						{user?.email}
+						{user?.displayName && <div>{user.displayName}</div>}
+						<div className="font-normal text-sm">{user?.email}</div>
 					</div>
 				),
 				disabled: true,
@@ -82,7 +83,11 @@ export default function HeaderContent({ data }) {
 								arrow
 							>
 								<div className="cursor-pointer bg-primary text-neutral-bright-100 flex items-center justify-center size-10 rounded-full font-bold shadow-md hover:bg-primary/90 transition-colors">
-									{user.name.charAt(0)}
+									{(
+										user?.displayName ||
+										user?.email ||
+										"U"
+									).charAt(0)}
 								</div>
 							</Dropdown>
 						) : (
@@ -109,7 +114,11 @@ export default function HeaderContent({ data }) {
 							trigger={["click"]}
 						>
 							<div className="cursor-pointer bg-primary text-neutral-bright-100 flex items-center justify-center size-9 rounded-full font-bold shadow-sm">
-								{user.name.charAt(0)}
+								{(
+									user?.displayName ||
+									user?.email ||
+									"U"
+								).charAt(0)}
 							</div>
 						</Dropdown>
 					)}

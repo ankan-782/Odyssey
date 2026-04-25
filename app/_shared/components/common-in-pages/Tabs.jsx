@@ -16,7 +16,7 @@ export default function Tabs({ data }) {
 			initial="hidden"
 			whileInView="show"
 			viewport={{ once: true }}
-			className={`grid grid-cols-2 bg-neutral-dark-600 rounded-[1.25rem] p-1.5 sm:p-2 lg:p-2.5 2xl:p-3 ${extraClassNames}`}
+			className={`grid grid-cols-2 bg-primary/10 rounded-2xl p-1 sm:p-1.5 ${extraClassNames}`}
 		>
 			{tabsData.map((tabInfo, index) => {
 				const { id, title, value } = tabInfo ?? {};
@@ -28,9 +28,15 @@ export default function Tabs({ data }) {
 					>
 						<button
 							onClick={() => setActiveTab(id)}
-							className="w-full relative p-3.5 sm:p-4 lg:p-4.5 2xl:p-5 text-lg sm:text-xl lg:text-2xl 2xl:text-3xl"
+							className="w-full relative p-2 sm:p-2.5 text-base sm:text-lg"
 						>
-							<span className="block relative z-10 w-full h-full text-center text-nowrap capitalize font-medium text-neutral-bright-200">
+							<span
+								className={`block relative z-10 w-full h-full text-center text-nowrap capitalize font-clashDisplay tracking-widest transition-colors duration-300 ${
+									activeTab === index
+										? "text-neutral-bright-100"
+										: "text-primary/60"
+								}`}
+							>
 								{title}
 							</span>
 
@@ -43,7 +49,7 @@ export default function Tabs({ data }) {
 										damping: 30,
 									}}
 									layoutId="background"
-									className="absolute inset-0 w-full h-full bg-neutral-dark-800 rounded-[1.25rem]"
+									className="absolute inset-0 w-full h-full bg-primary rounded-lg sm:rounded-xl"
 								/>
 							)}
 						</button>

@@ -1,29 +1,24 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { AuthContext } from "@/app/_shared/contexts/AuthContextProvider";
-import { EventContext } from "@/app/_shared/contexts/EventContextProvider";
-import useShowToastMessage from "@/app/_shared/hooks/useShowToastMessage";
-import EventForm from "@/app/_shared/components/forms/EventForm";
 import ContainerWrapper from "@/app/_shared/components/common-wrapper/ContainerWrapper";
-import Title from "@/app/_shared/components/texts/Title";
+import EventForm from "@/app/_shared/components/forms/EventForm";
 import Description from "@/app/_shared/components/texts/Description";
+import Title from "@/app/_shared/components/texts/Title";
+import { EventContext } from "@/app/_shared/contexts/EventContextProvider";
+import useAuthGuard from "@/app/_shared/hooks/useAuthGuard";
+import useShowToastMessage from "@/app/_shared/hooks/useShowToastMessage";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 
 export default function AddEventPage() {
-	const { user } = useContext(AuthContext);
+	const { user, isAuthLoading } = useAuthGuard("/events/add");
 	const { addEvent } = useContext(EventContext);
 	const { showToastMessage } = useShowToastMessage();
 	const router = useRouter();
+
 	const [isLoading, setIsLoading] = useState(false);
 
-	// redirect if not authenticated
-	useEffect(() => {
-		if (!user) {
-			router.push("/login");
-		}
-	}, [user, router]);
-
-	if (!user) return null;
+	// Wait for Firebase auth resolution before rendering
+	if (isAuthLoading || !user) return null;
 
 	const handleSubmit = (values) => {
 		setIsLoading(true);
