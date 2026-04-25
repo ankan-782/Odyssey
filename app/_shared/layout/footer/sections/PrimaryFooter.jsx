@@ -1,16 +1,13 @@
 "use client";
-import DownloadAppSourceList from "@/app/_shared/components/common-in-pages/DownloadAppSourceList";
 import SocialNavList from "@/app/_shared/components/common-in-pages/SocialNavList";
 import ContainerWrapper from "@/app/_shared/components/common-wrapper/ContainerWrapper";
 import RichTextDescription from "@/app/_shared/components/texts/RichtextDescription";
-import SpanText from "@/app/_shared/components/texts/SpanText";
 import { NavigationContext } from "@/app/_shared/contexts/NavigationContextProvider";
 import { useContext } from "react";
 import ContactInfo from "../components/ContactInfo";
 import FooterHelpLinks from "../components/FooterHelpLinks";
 import FooterLogo from "../components/FooterLogo";
 import FooterQuickLinks from "../components/FooterQuickLinks";
-import Subscribe from "../components/Subscribe";
 
 export default function PrimaryFooter({ data }) {
 	const {
@@ -23,7 +20,7 @@ export default function PrimaryFooter({ data }) {
 	const { footerLogoLight, footerLogoBlack, siteTitle, description } =
 		siteInformation ?? {};
 
-	const { footerQuickLinksMenuData, footerHelpMenuData } =
+	const { footerQuickLinksMenuData, footerHelpMenuData, profileMenuData } =
 		useContext(NavigationContext);
 
 	return (
@@ -99,6 +96,7 @@ export default function PrimaryFooter({ data }) {
 						{/* quick links */}
 						<FooterQuickLinks
 							footerQuickLinksMenuData={footerQuickLinksMenuData}
+							profileMenuData={profileMenuData}
 						/>
 
 						{/* help links */}

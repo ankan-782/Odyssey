@@ -2,7 +2,9 @@
 import IconButton from "@/app/_shared/components/buttons-links/IconButton";
 import SocialNavList from "@/app/_shared/components/common-in-pages/SocialNavList";
 import { CrossSVGIcon } from "@/app/_shared/components/ui/Icons";
+import { AuthContext } from "@/app/_shared/contexts/AuthContextProvider";
 import { AnimatePresence, motion } from "framer-motion";
+import { useContext } from "react";
 import HeaderLogo from "./HeaderLogo";
 import HeaderNavigationSidebarLinks from "./HeaderNavigationSidebarLinks";
 
@@ -15,13 +17,21 @@ export default function HeaderNavigationSidebarContent({ data }) {
 		setIsNavigationSidebarOpened,
 	} = data ?? {};
 
+	const { user } = useContext(AuthContext);
+
 	const { headerLogoLight, headerLogoBlack } = siteInformation ?? {};
 
+	const computedHeaderMenuData = user
+		? [...headerMenuData.filter((item) => item.navName !== "Login")]
+		: [...headerMenuData];
+
 	// Calculate total delay time to wait for closing sidebar
-	const sidebarClosingAnimationDelayTime = headerMenuData.length * 0.1; // items * stagger
+	const sidebarClosingAnimationDelayTime =
+		computedHeaderMenuData.length * 0.1; // items * stagger
 
 	// Calculate total delay time to wait for closing backdrop
-	const backdropClosingAnimationDelayTime = headerMenuData.length * 0.1 + 0.2; // items * stagger + delay time for opening sidebar
+	const backdropClosingAnimationDelayTime =
+		computedHeaderMenuData.length * 0.1 + 0.2; // items * stagger + delay time for opening sidebar
 
 	// motion configs (sidebar)
 	const navigationSidebarMotion = {
@@ -141,7 +151,13 @@ export default function HeaderNavigationSidebarContent({ data }) {
 							<div className="flex-auto overflow-y-auto hidden-scrollbar px-2">
 								<HeaderNavigationSidebarLinks
 									transitionDelay={0.6} // delay time to wait for opening sidebar + 0.1
-									data={data}
+									headerMenuData={computedHeaderMenuData}
+									isNavigationSidebarOpened={
+										isNavigationSidebarOpened
+									}
+									setIsNavigationSidebarOpened={
+										setIsNavigationSidebarOpened
+									}
 								/>
 							</div>
 

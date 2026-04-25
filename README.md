@@ -189,10 +189,14 @@ The `public/` directory is strictly organized into three subdirectories. All vis
 | `/events`        | Public    | All events with search and filtering                                     |
 | `/events/[id]`   | Public    | Event detail page with related events                                    |
 | `/about`         | Public    | About the platform                                                       |
-| `/login`         | Auth      | Firebase login — Email/Password and Google                               |
+| `/login`         | Auth      | Firebase login or register — Email/Password and Google                   |
 | `/events/add`    | Protected | Add a new event (requires login)                                         |
 | `/events/manage` | Protected | View and delete your events (requires login)                             |
 
 ## Author
 
-Avijit Roy, Full Stack Software Developer
+**Avijit Roy**
+Full Stack Software Developer
+
+[![Email](https://img.shields.io/badge/Email-royavijit782%40gmail.com-blue?style=flat&logo=gmail)](mailto:royavijit782@gmail.com)
+[![Portfolio](https://img.shields.io/badge/Portfolio-avijit--roy.vercel.app-green?style=flat&logo=vercel)](https://avijit-roy.vercel.app/)

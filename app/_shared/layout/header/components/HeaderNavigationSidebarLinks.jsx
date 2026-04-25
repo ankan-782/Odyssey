@@ -1,30 +1,23 @@
 "use client";
 import ContainedButton from "@/app/_shared/components/buttons-links/ContainedButton";
 import CustomLink from "@/app/_shared/components/buttons-links/CustomLink";
-import { AuthContext } from "@/app/_shared/contexts/AuthContextProvider";
 import {
 	staggeredItemsContainerMotion,
 	staggeredSingleItemMotion,
 } from "@/app/_shared/lib/motion-configuration-data";
 import { motion } from "framer-motion";
-import { useContext } from "react";
 import HeaderNavigationSidebarSubMenuDropdown from "./HeaderNavigationSidebarSubMenuDropdown";
 
 export default function HeaderNavigationSidebarLinks({
 	transitionDelay,
 	ariaLabel,
-	data,
+	headerMenuData,
+	isNavigationSidebarOpened,
+	setIsNavigationSidebarOpened,
+	onNavItemClick = () => {},
 	extraClassNames,
 	activeExtraClassNames,
 }) {
-	const {
-		headerMenuData,
-		isNavigationSidebarOpened,
-		setIsNavigationSidebarOpened,
-	} = data ?? {};
-
-	const { user, logout } = useContext(AuthContext);
-
 	// TODO: have to implement for nested path also
 	// useEffect(() => {
 	// 	const handleScroll = () => {
@@ -48,30 +41,6 @@ export default function HeaderNavigationSidebarLinks({
 	// 	return () => window.removeEventListener("scroll", handleScroll);
 	// }, []);
 
-	const computedHeaderMenuData = user
-		? [
-				...headerMenuData.filter((item) => item.navName !== "Login"),
-				{
-					navName: "Add Events",
-					path: "/events/add",
-					subNavItems: [],
-					action: null,
-				},
-				{
-					navName: "Manage Events",
-					path: "/events/manage",
-					subNavItems: [],
-					action: null,
-				},
-				{
-					navName: "Logout",
-					path: null,
-					subNavItems: [],
-					action: logout,
-				},
-			]
-		: headerMenuData;
-
 	return (
 		<nav
 			aria-label={
@@ -79,7 +48,6 @@ export default function HeaderNavigationSidebarLinks({
 			}
 		>
 			<motion.ul
-				key={user ? "logged-in" : "logged-out"}
 				variants={staggeredItemsContainerMotion({
 					showingDelay: transitionDelay,
 				})}
@@ -88,8 +56,8 @@ export default function HeaderNavigationSidebarLinks({
 				exit="hidden"
 				className="space-y-2"
 			>
-				{computedHeaderMenuData.length > 0 &&
-					computedHeaderMenuData.map((element, index) => {
+				{headerMenuData.length > 0 &&
+					headerMenuData.map((element, index) => {
 						const { navName, path, subNavItems, action, ...props } =
 							element ?? {};
 
@@ -104,9 +72,10 @@ export default function HeaderNavigationSidebarLinks({
 									<HeaderNavigationSidebarSubMenuDropdown
 										navName={navName}
 										subNavItems={subNavItems}
-										onClose={() =>
-											setIsNavigationSidebarOpened(false)
-										}
+										onClose={() => {
+											setIsNavigationSidebarOpened(false);
+											onNavItemClick();
+										}}
 										extraClassNames={extraClassNames}
 										activeExtraClassNames={
 											activeExtraClassNames
@@ -118,6 +87,7 @@ export default function HeaderNavigationSidebarLinks({
 										onClick={() => {
 											action();
 											setIsNavigationSidebarOpened(false);
+											onNavItemClick();
 										}}
 										buttonExtraClassNames={`block w-full btn-sidebar-menu-contained ${extraClassNames}`}
 									>
@@ -128,9 +98,10 @@ export default function HeaderNavigationSidebarLinks({
 								) : (
 									<CustomLink
 										buttonPath={path}
-										onClick={() =>
-											setIsNavigationSidebarOpened(false)
-										}
+										onClick={() => {
+											setIsNavigationSidebarOpened(false);
+											onNavItemClick();
+										}}
 										buttonExtraClassNames={`block btn-sidebar-menu-contained ${extraClassNames}`}
 										activeButtonExtraClassNames={`bg-primary text-neutral-bright-100 border-primary ${activeExtraClassNames}`}
 										{...props}

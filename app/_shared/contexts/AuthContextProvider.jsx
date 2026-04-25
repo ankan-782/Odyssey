@@ -8,12 +8,15 @@ import {
 } from "@/app/_shared/service/auth-service";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
+import useShowToastMessage from "../hooks/useShowToastMessage";
 
 export const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthContextProvider({ children }) {
+	const { showToastMessage } = useShowToastMessage();
+
 	const [user, setUser] = useState(null);
 	const [isAuthLoading, setIsAuthLoading] = useState(true);
 
@@ -41,7 +44,15 @@ export default function AuthContextProvider({ children }) {
 	};
 
 	const handleLogout = async () => {
-		await logoutUser();
+		const result = await logoutUser();
+
+		if (result) {
+			showToastMessage(
+				"success",
+				"Logged Out!",
+				"You have been logged out from the system.",
+			);
+		}
 	};
 
 	return (

@@ -4,7 +4,7 @@ import BaseMotionConfig from "@/app/_shared/components/common-wrapper/BaseMotion
 import { AuthContext } from "@/app/_shared/contexts/AuthContextProvider";
 import { viewportShowingMotion } from "@/app/_shared/lib/motion-configuration-data";
 import { AnimatePresence, motion } from "framer-motion";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import HeaderNavigationSidebarLinks from "./HeaderNavigationSidebarLinks";
 
 export default function HeaderProfileDropdown({
@@ -14,21 +14,34 @@ export default function HeaderProfileDropdown({
 	const { user } = useContext(AuthContext);
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSubMenuOpened, setIsSubMenuOpened] = useState(false);
-
-	console.log(user);
+	const dropdownRef = useRef(null);
 
 	const displayName = user?.displayName || user?.email || "User";
 	const photoURL = user?.photoURL || null;
 
+	// close on outside click
+	useEffect(() => {
+		if (!isOpen) return;
+		function handleOutsideClick(e) {
+			if (
+				dropdownRef.current &&
+				!dropdownRef.current.contains(e.target)
+			) {
+				setIsOpen(false);
+			}
+		}
+		document.addEventListener("mousedown", handleOutsideClick);
+		return () =>
+			document.removeEventListener("mousedown", handleOutsideClick);
+	}, [isOpen]);
+
 	return (
-		<div
-			className="relative"
-			onMouseEnter={() => setIsOpen(true)}
-			onMouseLeave={() => setIsOpen(false)}
-			onClick={() => setIsOpen((prev) => !prev)}
-		>
+		<div ref={dropdownRef} className="relative">
 			{/* trigger — ProfileImage */}
-			<div className="cursor-pointer bg-primary flex items-center justify-center size-10 rounded-full overflow-hidden font-bold shadow-md hover:bg-primary/90 transition-colors relative">
+			<div
+				onClick={() => setIsOpen((prev) => !prev)}
+				className="cursor-pointer bg-primary flex items-center justify-center size-10 rounded-full overflow-hidden font-bold shadow-md hover:bg-primary/90 transition-colors relative"
+			>
 				<ProfileImage
 					name={displayName}
 					profileImage={photoURL}
@@ -76,13 +89,12 @@ export default function HeaderProfileDropdown({
 								<HeaderNavigationSidebarLinks
 									transitionDelay={transitionDelay}
 									ariaLabel="header profile dropdown menu"
-									data={{
-										headerMenuData: profileMenuData,
-										isNavigationSidebarOpened:
-											isSubMenuOpened,
-										setIsNavigationSidebarOpened:
-											setIsSubMenuOpened,
-									}}
+									headerMenuData={profileMenuData}
+									isNavigationSidebarOpened={isSubMenuOpened}
+									setIsNavigationSidebarOpened={
+										setIsSubMenuOpened
+									}
+									onNavItemClick={() => setIsOpen(false)}
 									extraClassNames="!text-primary hover:!text-neutral-bright-100 !bg-transparent hover:!bg-primary !border-transparent hover:!border-primary"
 								/>
 							</div>

@@ -18,9 +18,9 @@ export default function HeaderContent({ data }) {
 	const { headerLogoLight, headerLogoBlack } = siteInformation ?? {};
 	const { user, logout } = useContext(AuthContext);
 
-	const computedHeaderMenuData = headerMenuData.filter(
-		(item) => !(user && item.navName === "Login"),
-	);
+	const computedHeaderMenuData = user
+		? [...headerMenuData.filter((item) => item.navName !== "Login")]
+		: [...headerMenuData];
 
 	const computedProfileMenuData = [
 		...profileMenuData,

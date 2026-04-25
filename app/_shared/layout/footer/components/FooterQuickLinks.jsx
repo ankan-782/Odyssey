@@ -11,7 +11,10 @@ import { motion } from "framer-motion";
 import { useContext } from "react";
 import FooterSubMenuDropdown from "./FooterSubMenuDropdown";
 
-export default function FooterQuickLinks({ footerQuickLinksMenuData }) {
+export default function FooterQuickLinks({
+	footerQuickLinksMenuData,
+	profileMenuData,
+}) {
 	const { user, logout } = useContext(AuthContext);
 
 	// TODO: have to implement for nested path also
@@ -42,18 +45,7 @@ export default function FooterQuickLinks({ footerQuickLinksMenuData }) {
 				...footerQuickLinksMenuData.filter(
 					(item) => item.navName !== "Login",
 				),
-				{
-					navName: "Add Events",
-					path: "/events/add",
-					subNavItems: [],
-					action: null,
-				},
-				{
-					navName: "Manage Events",
-					path: "/events/manage",
-					subNavItems: [],
-					action: null,
-				},
+				...profileMenuData,
 				{
 					navName: "Logout",
 					path: null,
@@ -61,7 +53,7 @@ export default function FooterQuickLinks({ footerQuickLinksMenuData }) {
 					action: logout,
 				},
 			]
-		: footerQuickLinksMenuData;
+		: [...footerQuickLinksMenuData];
 
 	return (
 		<div className="space-y-6">
