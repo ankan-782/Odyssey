@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { IMAGE_URL } from "../../lib/api-url-constant-data";
 
 export default function ProfileImage({ name, profileImage, extraClassNames }) {
 	const nameArray = name?.split(" ");
@@ -19,11 +18,7 @@ export default function ProfileImage({ name, profileImage, extraClassNames }) {
 	if (profileImage) {
 		return (
 			<Image
-				src={
-					typeof profileImage === "object"
-						? profileImage // static folder image
-						: `${IMAGE_URL}/${profileImage}` // server image
-				}
+				src={profileImage}
 				alt={`${name} image`}
 				fill
 				sizes="100%"
@@ -42,10 +37,12 @@ export default function ProfileImage({ name, profileImage, extraClassNames }) {
 }
 
 // usage example:
-{/* <div className="flex-none relative overflow-hidden h-16 sm:h-20 aspect-square rounded-full bg-primary/20 flex justify-center items-center">
+{
+	/* <div className="flex-none relative overflow-hidden h-16 sm:h-20 aspect-square rounded-full bg-primary/20 flex justify-center items-center">
 	<ProfileImage
 		name={profile?.fullName}
 		profileImage={profile?.profilePicture}
 		extraClassNames="!text-2xl sm:!text-3xl"
 	/>
-</div>; */}
+</div>; */
+}

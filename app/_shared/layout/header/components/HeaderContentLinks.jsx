@@ -1,17 +1,24 @@
 "use client";
 import ContainedButton from "@/app/_shared/components/buttons-links/ContainedButton";
 import CustomLink from "@/app/_shared/components/buttons-links/CustomLink";
+import { AuthContext } from "@/app/_shared/contexts/AuthContextProvider";
 import {
 	staggeredItemsContainerMotion,
 	staggeredSingleItemMotion,
 } from "@/app/_shared/lib/motion-configuration-data";
 import { motion } from "framer-motion";
+import { useContext } from "react";
 import HeaderSubMenuDropdownAfterHover from "./HeaderSubMenuDropdownAfterHover";
 
 export default function HeaderContentLinks({
 	transitionDelay,
+	ariaLabel,
 	headerMenuData,
+	extraClassNames,
+	activeExtraClassNames,
 }) {
+	const { user } = useContext(AuthContext);
+
 	// TODO: have to implement for nested path also
 	// useEffect(() => {
 	// 	const handleScroll = () => {
@@ -36,8 +43,13 @@ export default function HeaderContentLinks({
 	// }, []);
 
 	return (
-		<nav aria-label="header content navigation list for larger devices">
+		<nav
+			aria-label={
+				ariaLabel ?? "header content navigation list for larger devices"
+			}
+		>
 			<motion.ul
+				key={user ? "logged-in" : "logged-out"}
 				initial="hidden"
 				whileInView="show"
 				variants={staggeredItemsContainerMotion({
@@ -62,12 +74,16 @@ export default function HeaderContentLinks({
 										key={`dropdown-${index}-${navName}`}
 										navName={navName}
 										subNavItems={subNavItems}
+										extraClassNames={extraClassNames}
+										activeExtraClassNames={
+											activeExtraClassNames
+										}
 									/>
 								) : action ? (
 									<ContainedButton
 										buttonType="click"
 										onClick={() => action()}
-										buttonExtraClassNames="block w-full btn-header-menu-contained"
+										buttonExtraClassNames={`block w-full btn-header-menu-contained ${extraClassNames}`}
 									>
 										<span className="block text-nowrap text-start">
 											{navName}
@@ -76,8 +92,8 @@ export default function HeaderContentLinks({
 								) : (
 									<CustomLink
 										buttonPath={path}
-										buttonExtraClassNames="block btn-header-menu-contained"
-										activeButtonExtraClassNames="bg-primary text-neutral-bright-100 border-primary"
+										buttonExtraClassNames={`block btn-header-menu-contained ${extraClassNames}`}
+										activeButtonExtraClassNames={`bg-primary text-neutral-bright-100 border-primary ${activeExtraClassNames}`}
 										{...props}
 									>
 										<span className="block text-nowrap text-start">

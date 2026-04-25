@@ -13,14 +13,36 @@ export default function NavigationContextProvider({ children }) {
 			action: null,
 		},
 		{
+			navName: "About",
+			path: "/about",
+			subNavItems: [],
+			action: null,
+		},
+		{
 			navName: "Events",
 			path: "/events",
 			subNavItems: [],
 			action: null,
 		},
 		{
-			navName: "About",
-			path: "/about",
+			navName: "Login",
+			path: "/login",
+			subNavItems: [],
+			action: null,
+		},
+	];
+
+	// profile navigation list
+	const PROFILE_MENU_ITEMS = [
+		{
+			navName: "Add Events",
+			path: "/events/add",
+			subNavItems: [],
+			action: null,
+		},
+		{
+			navName: "Manage Events",
+			path: "/events/manage",
 			subNavItems: [],
 			action: null,
 		},
@@ -35,14 +57,14 @@ export default function NavigationContextProvider({ children }) {
 			action: null,
 		},
 		{
-			navName: "Events",
-			path: "/events",
+			navName: "About",
+			path: "/about",
 			subNavItems: [],
 			action: null,
 		},
 		{
-			navName: "About",
-			path: "/about",
+			navName: "Events",
+			path: "/events",
 			subNavItems: [],
 			action: null,
 		},
@@ -92,6 +114,7 @@ export default function NavigationContextProvider({ children }) {
 		<NavigationContext.Provider
 			value={{
 				headerMenuData: HEADER_MENU_ITEMS,
+				profileMenuData: PROFILE_MENU_ITEMS,
 				footerQuickLinksMenuData: FOOTER_QUICK_LINKS_MENU_ITEMS,
 				footerHelpMenuData: FOOTER_HELP_MENU_ITEMS,
 			}}

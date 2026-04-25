@@ -13,7 +13,7 @@ export default function HeaderWrapper({ data }) {
 		useState(false);
 	const [isPageScrolledDown, setIsPageScrolledDown] = useState(false);
 
-	const { headerMenuData } = useContext(NavigationContext);
+	const { headerMenuData, profileMenuData } = useContext(NavigationContext);
 
 	const pathname = usePathname();
 	const isHomepage = pathname === "/";
@@ -49,6 +49,7 @@ export default function HeaderWrapper({ data }) {
 					data={{
 						siteInformation,
 						headerMenuData,
+						profileMenuData,
 						isNavigationSidebarOpened,
 						setIsNavigationSidebarOpened,
 					}}

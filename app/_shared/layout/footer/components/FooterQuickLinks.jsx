@@ -2,14 +2,18 @@
 import CustomLink from "@/app/_shared/components/buttons-links/CustomLink";
 import TextButton from "@/app/_shared/components/buttons-links/TextButton";
 import Title from "@/app/_shared/components/texts/Title";
+import { AuthContext } from "@/app/_shared/contexts/AuthContextProvider";
 import {
 	staggeredItemsContainerMotion,
 	staggeredSingleItemMotion,
 } from "@/app/_shared/lib/motion-configuration-data";
 import { motion } from "framer-motion";
+import { useContext } from "react";
 import FooterSubMenuDropdown from "./FooterSubMenuDropdown";
 
 export default function FooterQuickLinks({ footerQuickLinksMenuData }) {
+	const { user, logout } = useContext(AuthContext);
+
 	// TODO: have to implement for nested path also
 	// useEffect(() => {
 	// 	const handleScroll = () => {
@@ -33,6 +37,32 @@ export default function FooterQuickLinks({ footerQuickLinksMenuData }) {
 	// 	return () => window.removeEventListener("scroll", handleScroll);
 	// }, []);
 
+	const computedQuickLinksMenuData = user
+		? [
+				...footerQuickLinksMenuData.filter(
+					(item) => item.navName !== "Login",
+				),
+				{
+					navName: "Add Events",
+					path: "/events/add",
+					subNavItems: [],
+					action: null,
+				},
+				{
+					navName: "Manage Events",
+					path: "/events/manage",
+					subNavItems: [],
+					action: null,
+				},
+				{
+					navName: "Logout",
+					path: null,
+					subNavItems: [],
+					action: logout,
+				},
+			]
+		: footerQuickLinksMenuData;
+
 	return (
 		<div className="space-y-6">
 			{/* title */}
@@ -46,6 +76,7 @@ export default function FooterQuickLinks({ footerQuickLinksMenuData }) {
 			{/* nav links */}
 			<nav aria-label="footer content quick links navigation menu list">
 				<motion.ul
+					key={user ? "logged-in" : "logged-out"}
 					variants={staggeredItemsContainerMotion({
 						showingDelay: 0.4,
 					})}
@@ -54,8 +85,8 @@ export default function FooterQuickLinks({ footerQuickLinksMenuData }) {
 					viewport={{ once: true }}
 					className="space-y-4"
 				>
-					{footerQuickLinksMenuData.length > 0 &&
-						footerQuickLinksMenuData.map((element, index) => {
+					{computedQuickLinksMenuData.length > 0 &&
+						computedQuickLinksMenuData.map((element, index) => {
 							const {
 								navName,
 								path,

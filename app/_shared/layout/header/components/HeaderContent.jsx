@@ -1,16 +1,16 @@
 "use client";
-import ContainedButton from "@/app/_shared/components/buttons-links/ContainedButton";
 import { AuthContext } from "@/app/_shared/contexts/AuthContextProvider";
-import { Dropdown } from "antd";
 import { useContext } from "react";
 import HeaderContentLinks from "./HeaderContentLinks";
 import HeaderLogo from "./HeaderLogo";
+import HeaderProfileDropdown from "./HeaderProfileDropdown";
 import HeaderSwitchButton from "./HeaderSwitchButton";
 
 export default function HeaderContent({ data }) {
 	const {
 		siteInformation,
 		headerMenuData,
+		profileMenuData,
 		isNavigationSidebarOpened,
 		setIsNavigationSidebarOpened,
 	} = data ?? {};
@@ -18,43 +18,14 @@ export default function HeaderContent({ data }) {
 	const { headerLogoLight, headerLogoBlack } = siteInformation ?? {};
 	const { user, logout } = useContext(AuthContext);
 
-	const userMenu = {
-		items: [
-			{
-				key: "1",
-				label: (
-					<div className="text-neutral-dark-800 font-semibold mb-1 border-b border-neutral-bright-200 pb-1">
-						{user?.displayName && <div>{user.displayName}</div>}
-						<div className="font-normal text-sm">{user?.email}</div>
-					</div>
-				),
-				disabled: true,
-			},
-			{
-				key: "2",
-				label: "Add Event",
-				onClick: () => {
-					window.location.href = "/events/add";
-				},
-			},
-			{
-				key: "3",
-				label: "Manage Events",
-				onClick: () => {
-					window.location.href = "/events/manage";
-				},
-			},
-			{
-				type: "divider",
-			},
-			{
-				key: "4",
-				label: "Logout",
-				danger: true,
-				onClick: logout,
-			},
-		],
-	};
+	const computedHeaderMenuData = headerMenuData.filter(
+		(item) => !(user && item.navName === "Login"),
+	);
+
+	const computedProfileMenuData = [
+		...profileMenuData,
+		{ navName: "Logout", path: null, subNavItems: [], action: logout },
+	];
 
 	return (
 		<div className="container py-4">
@@ -68,68 +39,37 @@ export default function HeaderContent({ data }) {
 				/>
 
 				{/* nav page items and auth actions */}
-				<div className="hidden md:flex items-center gap-1 lg:gap-1.5">
+				<div className="hidden md:flex md:items-center md:gap-1 lg:gap-1.5">
 					<HeaderContentLinks
 						transitionDelay={0.3}
-						headerMenuData={headerMenuData}
+						headerMenuData={computedHeaderMenuData}
 					/>
 
 					{/* auth actions */}
-					<div className="flex items-center gap-3">
-						{user ? (
-							<Dropdown
-								menu={userMenu}
-								placement="bottomRight"
-								arrow
-							>
-								<div className="cursor-pointer bg-primary text-neutral-bright-100 flex items-center justify-center size-10 rounded-full font-bold shadow-md hover:bg-primary/90 transition-colors">
-									{(
-										user?.displayName ||
-										user?.email ||
-										"U"
-									).charAt(0)}
-								</div>
-							</Dropdown>
-						) : (
-							<ContainedButton
-								buttonType="link"
-								buttonPath="/login"
-								buttonExtraClassNames="block w-full btn-header-menu-contained"
-							>
-								<span className="block text-nowrap text-start">
-									Login
-								</span>
-							</ContainedButton>
-						)}
-					</div>
+					{user && (
+						<HeaderProfileDropdown
+							transitionDelay={0.1}
+							profileMenuData={computedProfileMenuData}
+						/>
+					)}
 				</div>
 
-				{/* switch button for opening navigation sidebar */}
-				<div className="flex items-center gap-4 md:hidden">
+				<div className="flex md:hidden items-center gap-3">
+					{/* auth actions */}
 					{user && (
-						<Dropdown
-							menu={userMenu}
-							placement="bottomRight"
-							arrow
-							trigger={["click"]}
-						>
-							<div className="cursor-pointer bg-primary text-neutral-bright-100 flex items-center justify-center size-9 rounded-full font-bold shadow-sm">
-								{(
-									user?.displayName ||
-									user?.email ||
-									"U"
-								).charAt(0)}
-							</div>
-						</Dropdown>
+						<HeaderProfileDropdown
+							transitionDelay={0.1}
+							profileMenuData={computedProfileMenuData}
+						/>
 					)}
 
+					{/* switch button for opening navigation sidebar */}
 					<HeaderSwitchButton
 						transitionDelay={0.7}
 						data={{
 							setIsNavigationSidebarOpened,
 							isNavigationSidebarOpened,
 						}}
-						// extraClassNames="block md:hidden"
 					/>
 				</div>
 			</div>

@@ -76,7 +76,7 @@ export default function HeaderSubMenuDropdownAfterHover({
 									: "pt-4 left-0"
 							}`}
 						>
-							<ul className="p-1.5 lg:p-2 space-y-1 rounded-[1.25rem] min-w-28 lg:min-w-36 bg-neutral-bright-100 shadow-lg">
+							<ul className="p-1.5 lg:p-2 space-y-1 rounded-xl min-w-28 lg:min-w-36 bg-neutral-bright-100 shadow-lg">
 								{subNavItems.length > 0 &&
 									subNavItems.map((element, index) => {
 										const {
