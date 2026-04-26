@@ -13,36 +13,24 @@ export const contentType = "image/png";
 
 // Image generation
 export default async function Icon() {
-	// const siteConfigData = await getSiteConfigData();
-	// const { favicon } = siteConfigData.content[0] ?? {};
+	// Fetch the logo image from your public folder
+	const logoData = await fetch(
+		new URL("../public/logos-icons/odyssey-o.png", import.meta.url),
+	).then((res) => res.arrayBuffer());
 
 	return new ImageResponse(
-		// ImageResponse JSX element
-		// <img
-		// 	src={`${IMAGE_URL}/${favicon}`}
-		// 	alt="O"
-		// 	width="32"
-		// 	height="32"
-		// />
 		<div
 			style={{
-				fontSize: 26,
-				background: "#25324B",
 				width: "100%",
 				height: "100%",
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
-				borderRadius: "8px",
-				color: "white",
 			}}
 		>
-			O
+			<img src={logoData} width="32" height="32" alt="O" />
 		</div>,
-		// ImageResponse options
 		{
-			// For convenience, we can re-use the exported icons size metadata
-			// config to also set the ImageResponse's width and height.
 			...size,
 		},
 	);
