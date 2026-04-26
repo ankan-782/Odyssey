@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import AuthSection from "./sections/AuthSection";
 
 // metadata
@@ -8,8 +9,8 @@ export const metadata = {
 
 export default function LoginRegisterPage() {
 	return (
-		<>
+		<Suspense>
 			<AuthSection />
-		</>
+		</Suspense>
 	);
 }
