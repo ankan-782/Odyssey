@@ -4,7 +4,7 @@ import ContainedButton from "../buttons-links/ContainedButton";
 
 export default function EventCard({ info, index, dataTitle, payloadData }) {
 	const {
-		id,
+		slug,
 		title,
 		shortDescription,
 		category,
@@ -57,7 +57,7 @@ export default function EventCard({ info, index, dataTitle, payloadData }) {
 
 					<ContainedButton
 						buttonType="link"
-						buttonPath={`/events/${id}`}
+						buttonPath={`/events/${slug}`}
 						buttonExtraClassNames="block btn-contained !text-xs sm:!text-sm !px-3 !py-1.5 sm:!px-4 sm:!py-2"
 					>
 						<span className="block text-nowrap">View Details</span>

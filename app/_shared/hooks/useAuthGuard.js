@@ -20,7 +20,7 @@ export default function useAuthGuard(currentPath = "") {
 
 		if (!user) {
 			const redirectPath = currentPath
-				? `/login?redirect-to=${encodeURIComponent(currentPath)}`
+				? `/login?redirect-to=${currentPath}`
 				: "/login";
 			router.push(redirectPath);
 		}

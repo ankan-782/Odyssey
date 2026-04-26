@@ -5,7 +5,7 @@ import useApiCall from "../../hooks/useApiCall";
 import useShowModal from "../../hooks/useShowModal";
 import useShowToastMessage from "../../hooks/useShowToastMessage";
 import { viewportShowingMotion } from "../../lib/motion-configuration-data";
-import postSubscribeInfoData from "../../service/subscribe-service";
+import postSubscribeInfoData from "../../services/subscribe-service";
 import ContainedButton from "../buttons-links/ContainedButton";
 import BaseMotionConfig from "../common-wrapper/BaseMotionConfig";
 

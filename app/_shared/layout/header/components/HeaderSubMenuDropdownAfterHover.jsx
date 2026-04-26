@@ -119,7 +119,7 @@ export default function HeaderSubMenuDropdownAfterHover({
 													<CustomLink
 														buttonPath={path}
 														buttonExtraClassNames={`block btn-header-menu-contained ${extraClassNames}`}
-														activeButtonExtraClassNames={`bg-primary text-neutral-bright-100 border-primary ${activeExtraClassNames}`}
+														activeButtonExtraClassNames={`!bg-primary !text-neutral-bright-100 !border-primary ${activeExtraClassNames}`}
 														{...props}
 													>
 														<span className="block text-nowrap">

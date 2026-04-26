@@ -122,7 +122,7 @@ export default function HeaderNavigationSidebarSubMenuDropdown({
 													onClick={onClose}
 													buttonPath={path}
 													buttonExtraClassNames={`block btn-sidebar-menu-contained ${extraClassNames}`}
-													activeButtonExtraClassNames={`bg-primary text-neutral-bright-100 border-primary ${activeExtraClassNames}`}
+													activeButtonExtraClassNames={`!bg-primary !text-neutral-bright-100 !border-primary ${activeExtraClassNames}`}
 													{...props}
 												>
 													<span className="block text-nowrap">

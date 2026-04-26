@@ -4,17 +4,18 @@ A comprehensive event management platform for discovering, creating, and managin
 
 ## Tech Stack
 
-| Library / Tool               | Purpose                                                                          |
-| ---------------------------- | -------------------------------------------------------------------------------- |
-| **Next.js (14.2.18)**        | Core React framework using the App Router for server-side rendering and routing. |
-| **React (18)**               | UI library.                                                                      |
-| **Tailwind CSS (3.4.1)**     | Utility-first CSS framework for rapid UI styling.                                |
-| **Ant Design (5.22.1)**      | Comprehensive React UI component library (modals, config providers, etc.).       |
-| **Framer Motion (11.11.17)** | Animation library for complex declarative UI transitions and layout animations.  |
-| **Swiper (11.2.6)**          | Touch slider and carousel implementation.                                        |
-| **Moment.js (2.30.1)**       | Date and time parsing/formatting.                                                |
-| **Sharp (0.33.5)**           | High-performance image processing for Next.js Image Optimization.                |
-| **ESLint**                   | Code quality and linting (`eslint-config-next`).                                 |
+| Library / Tool                | Purpose                                                                          |
+| ----------------------------- | -------------------------------------------------------------------------------- |
+| **Next.js (14.2.18)**         | Core React framework using the App Router for server-side rendering and routing. |
+| **React (18)**                | UI library.                                                                      |
+| **Tailwind CSS (3.4.1)**      | Utility-first CSS framework for rapid UI styling.                                |
+| **Ant Design (5.22.1)**       | Comprehensive React UI component library (modals, config providers, etc.).       |
+| **Framer Motion (11.11.17)**  | Animation library for complex declarative UI transitions and layout animations.  |
+| **Swiper (11.2.6)**           | Touch slider and carousel implementation.                                        |
+| **Moment.js (2.30.1)**        | Date and time parsing/formatting.                                                |
+| **Sharp (0.33.5)**            | High-performance image processing for Next.js Image Optimization.                |
+| **nextjs-toploader (3.7.15)** | Progress bar for aesthetic page transitions.                                     |
+| **ESLint**                    | Code quality and linting (`eslint-config-next`).                                 |
 
 ## Architecture & Routing
 
@@ -26,8 +27,16 @@ The application strictly uses the **Next.js App Router** with a logical split us
 - **Special Next.js Files**:
     - `error.jsx` / `global-error.jsx`: Catch unexpected runtime errors and display a stylized UI (`ErrorContent` / `GlobalErrorContent`).
     - `not-found.jsx`: Renders the `NotFoundContent` component when a user hits an undefined route.
-    - `loading.jsx`: Provides a global suspense boundary using the `LoaderContent` component.
+    - `loading.jsx`: Previously used for global suspense boundaries; now replaced by **`nextjs-toploader`** in the root layout for a more polished and aesthetic loading experience during navigation.
     - `icon.js`: Generates a dynamic Next.js edge-runtime favicon (currently rendering the letter "O").
+
+## API Layer (`app/api`)
+
+The application implements a local "backend" using **Next.js API Routes** to handle data persistence:
+
+- **`/api/events`**: Handles `GET` (fetching all events) and `POST` (adding a new event).
+- **`/api/events/[id]`**: Handles `DELETE` requests to remove specific events.
+- **JSON Storage**: All event data is persisted in `app/data/events.json`, which acts as the project's local database.
 
 ## Shared Module (`_shared`)
 
@@ -72,7 +81,8 @@ Highly modularized UI building blocks:
 ### `lib/`
 
 - `firebase-config.js` — Initializes the Firebase app (singleton pattern), exports `auth`, `googleProvider`, and `initAnalytics`.
-- `events-data.js` — Static seed data for events. Acts as the local data source in absence of a backend.
+- `events.json` (moved to `app/data/`) — The primary JSON data store for all events.
+- `events-data.js` — Shared constants like `EVENT_CATEGORIES`.
 - `api-url-constant-data.js` — Contains base URLs (`ROOT_URL`) and fully qualified endpoints for all API fetches.
 - `font-data.js` — Initializes Next.js fonts (Epilogue, ClashDisplay, Geist) and exports them as CSS variables.
 - `helper-data.js` — Reusable pure functions (e.g., `hexToRgba`, string formatting, nested category/menu tree builders).
@@ -82,8 +92,9 @@ Highly modularized UI building blocks:
 - `seo-handler-data.js` — Provides `getMetaData` for generating Next.js metadata and `getSchema` for LD-JSON injection.
 - `theme-data.js` — Exports a `COLORS` object mirroring the Tailwind palette, making theme colors accessible within JavaScript logic.
 
-### `service/`
+### `services/`
 
+- `event-service.js` — Manages API communication for events: `getAllEvents`, `addEventApi`, `deleteEventApi`, `getEventBySlug`, `getRelatedEvents`.
 - `auth-service.js` — Handles all Firebase Authentication operations: `loginWithEmail`, `registerWithEmail`, `loginWithGoogle`, `logoutUser`.
 - `subscribe-service.js` — Handles POST requests for newsletter signups.
 - `upload-service.js` — Manages file and image upload API calls.
@@ -175,11 +186,11 @@ The `public/` directory is strictly organized into three subdirectories. All vis
 ## Key Features
 
 - Browse and search events with multi-field filtering (category, price, rating, date)
-- View detailed event pages with related event suggestions
+- View detailed event pages using clean, slug-based URLs
 - Firebase Authentication — Email/Password and Google Sign-In
 - Protected pages: Add and Manage events (redirect with `?redirect-to=` pattern)
 - Fully responsive across mobile, tablet, and desktop
-- Static local data — no backend required
+- **Local Persistence**: Data is stored in `app/data/events.json` and served via Next.js API routes.
 
 ## Route Summary
 
@@ -187,7 +198,7 @@ The `public/` directory is strictly organized into three subdirectories. All vis
 | :--------------- | :-------- | :----------------------------------------------------------------------- |
 | `/`              | Public    | Landing page with hero, featured events, categories, stats, testimonials |
 | `/events`        | Public    | All events with search and filtering                                     |
-| `/events/[id]`   | Public    | Event detail page with related events                                    |
+| `/events/[slug]` | Public    | Event detail page using clean slugs (e.g., `/events/tech-summit`)        |
 | `/about`         | Public    | About the platform                                                       |
 | `/login`         | Auth      | Firebase login or register — Email/Password and Google                   |
 | `/events/add`    | Protected | Add a new event (requires login)                                         |

@@ -4,13 +4,13 @@
 
 @layer components {
 	.btn-contained {
-		@apply capitalize text-xs sm:text-sm lg:text-base px-3 py-1.5 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-primary hover:bg-neutral-dark-800 text-neutral-bright-100 border border-primary hover:border-transparent rounded-xl select-none touch-manipulation active:!scale-[0.97] will-change-transform transition-all duration-300;
+		@apply capitalize text-xs sm:text-sm lg:text-base px-3 py-1.5 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 bg-primary hover:bg-neutral-dark-800 text-neutral-bright-100 border border-primary hover:border-transparent rounded-lg lg:rounded-xl select-none touch-manipulation active:!scale-[0.97] will-change-transform transition-all duration-300;
 	}
 	.btn-header-menu-contained {
-		@apply btn-contained !text-xs lg:!text-sm !px-3 !py-1.5 lg:!px-4 lg:!py-2 rounded-lg lg:rounded-xl text-primary hover:text-neutral-bright-100 bg-transparent hover:bg-primary border-transparent hover:border-primary;
+		@apply btn-contained !text-xs lg:!text-sm !px-3 !py-1.5 lg:!px-4 lg:!py-2 text-primary hover:text-neutral-bright-100 bg-transparent hover:bg-primary border-transparent hover:border-primary;
 	}
 	.btn-sidebar-menu-contained {
-		@apply btn-contained !text-sm !px-3 !py-1.5 rounded-lg text-neutral-bright-100 bg-transparent hover:bg-primary border-transparent hover:border-primary;
+		@apply btn-contained !text-sm !px-3 !py-1.5 text-neutral-bright-100 bg-transparent hover:bg-primary border-transparent hover:border-primary;
 	}
 	.btn-form-contained {
 		@apply btn-contained !bg-primary hover:!bg-neutral-dark-800 !text-neutral-bright-100 !border-primary hover:!border-transparent w-full h-full;
@@ -238,4 +238,20 @@
 /* antd pagination */
 .ant-pagination .ant-pagination-item {
 	border: none !important;
+}
+
+/* Ant Design Table Overrides */
+.custom-antd-table .ant-table-thead > tr > th {
+	@apply !bg-neutral-dark-800 !text-neutral-bright-100 !text-xs sm:!text-sm !border-none;
+}
+.custom-antd-table .ant-table-tbody > tr > td {
+	@apply !border-b !border-neutral-bright-200;
+}
+.custom-antd-table .ant-table-tbody > tr:hover > td {
+	@apply !bg-primary/5;
+}
+
+/* Ant Design Pagination Overrides */
+.ant-pagination {
+	@apply !gap-2;
 }

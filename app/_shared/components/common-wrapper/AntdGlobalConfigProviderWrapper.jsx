@@ -19,14 +19,25 @@ export default function AntdGlobalConfigProviderWrapper({ children }) {
 		}
 	};
 
-	const getPadding = (width) => {
+	const getHeight = (width) => {
 		switch (true) {
 			case width < 576:
-				return 6;
+				return 32;
 			case width < 1024:
-				return 8;
+				return 36;
 			default:
+				return 40;
+		}
+	};
+
+	const getRadius = (width) => {
+		switch (true) {
+			case width < 576:
+				return 8;
+			case width < 1024:
 				return 10;
+			default:
+				return 12;
 		}
 	};
 
@@ -38,7 +49,8 @@ export default function AntdGlobalConfigProviderWrapper({ children }) {
 					fontSize: getFontSize(viewportWidth),
 					fontFamily: { EPILOGUE_FONT },
 					sizePopupArrow: 24,
-					borderRadius: 12,
+					borderRadius: getRadius(viewportWidth),
+					controlHeight: getHeight(viewportWidth),
 					colorBorder: COLORS.primary,
 					colorBgContainer: COLORS.neutral.bright[100],
 					colorBgElevated: COLORS.neutral.bright[100],
@@ -55,10 +67,6 @@ export default function AntdGlobalConfigProviderWrapper({ children }) {
 					Form: {
 						labelColor: COLORS.neutral.dark[800],
 					},
-					Input: {
-						paddingBlock: getPadding(viewportWidth),
-						paddingInline: getPadding(viewportWidth) + 2,
-					},
 					Select: {
 						optionSelectedColor: COLORS.neutral.bright[100],
 						optionSelectedBg: COLORS.neutral.dark[800],
@@ -67,9 +75,6 @@ export default function AntdGlobalConfigProviderWrapper({ children }) {
 							0.6,
 						),
 						zIndexPopup: 10,
-						optionPadding: `${getPadding(viewportWidth)}px ${
-							getPadding(viewportWidth) + 2
-						}px`,
 					},
 					Button: {
 						defaultBg: COLORS.primary,

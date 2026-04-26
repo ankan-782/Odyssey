@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import EventsSection from "./sections/EventsSection";
 
 // metadata
@@ -9,8 +10,8 @@ export const metadata = {
 
 export default function EventsPage() {
 	return (
-		<>
+		<Suspense>
 			<EventsSection />
-		</>
+		</Suspense>
 	);
 }

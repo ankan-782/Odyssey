@@ -124,7 +124,7 @@ export default function FooterSubMenuDropdown({
 													}
 													buttonPath={path}
 													buttonExtraClassNames={`w-fit block btn-text !text-neutral-bright-200 hover:!text-secondary ${extraClassNames}`}
-													activeButtonExtraClassNames={`text-secondary font-medium ${activeExtraClassNames}`}
+													activeButtonExtraClassNames={`!text-secondary !font-medium ${activeExtraClassNames}`}
 													{...props}
 												>
 													{navName}

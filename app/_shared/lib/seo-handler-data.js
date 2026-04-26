@@ -1,4 +1,4 @@
-import { getStaticPagesData } from "../service/static-page-service";
+import { getStaticPagesData } from "../services/static-page-service";
 import { IMAGE_URL } from "./api-url-constant-data";
 
 export const getMetaData = async (pageSlug) => {

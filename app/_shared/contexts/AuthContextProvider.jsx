@@ -5,7 +5,7 @@ import {
 	loginWithGoogle,
 	logoutUser,
 	registerWithEmail,
-} from "@/app/_shared/service/auth-service";
+} from "@/app/_shared/services/auth-service";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import useShowToastMessage from "../hooks/useShowToastMessage";

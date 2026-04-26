@@ -7,16 +7,19 @@ import { EventContext } from "@/app/_shared/contexts/EventContextProvider";
 import useDebounce from "@/app/_shared/hooks/useDebounce";
 import { EVENT_CATEGORIES } from "@/app/_shared/lib/events-data";
 import { viewportShowingMotion } from "@/app/_shared/lib/motion-configuration-data";
-import { Input, Select } from "antd";
+import { Input, Pagination, Select } from "antd";
 import { motion } from "framer-motion";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useMemo, useState } from "react";
 
 export default function EventsSection() {
 	const { events } = useContext(EventContext);
+	const router = useRouter();
 	const searchParams = useSearchParams();
 
 	const initialCategory = searchParams.get("category") || "all";
+	const currentPage = parseInt(searchParams.get("page") || "1");
+	const pageSize = parseInt(searchParams.get("size") || "6");
 
 	const [searchQuery, setSearchQuery] = useState("");
 	const [selectedCategory, setSelectedCategory] = useState(initialCategory);
@@ -48,6 +51,25 @@ export default function EventsSection() {
 			return matchesSearch && matchesCategory && matchesPrice;
 		});
 	}, [events, debouncedSearchQuery, selectedCategory, priceFilter]);
+
+	// paginated events
+	const paginatedEvents = useMemo(() => {
+		const startIndex = (currentPage - 1) * pageSize;
+		return filteredEvents.slice(startIndex, startIndex + pageSize);
+	}, [filteredEvents, currentPage, pageSize]);
+
+	const handlePaginationChange = (page, pageSize) => {
+		const params = new URLSearchParams(searchParams);
+		params.set("page", page);
+		params.set("size", pageSize);
+		router.push(`?${params.toString()}`, { scroll: false });
+	};
+
+	const resetPagination = () => {
+		const params = new URLSearchParams(searchParams);
+		params.set("page", "1");
+		router.push(`?${params.toString()}`, { scroll: false });
+	};
 
 	return (
 		<motion.section
@@ -86,13 +108,17 @@ export default function EventsSection() {
 								const value = e.target.value;
 								setSearchQuery(value);
 								handleSearchDebounced(value);
+								resetPagination();
 							}}
 							allowClear
-							className="flex-1 h-10"
+							className="flex-1"
 						/>
 						<Select
 							value={selectedCategory}
-							onChange={setSelectedCategory}
+							onChange={(value) => {
+								setSelectedCategory(value);
+								resetPagination();
+							}}
 							className="w-full sm:w-44"
 							size="large"
 						>
@@ -107,7 +133,10 @@ export default function EventsSection() {
 						</Select>
 						<Select
 							value={priceFilter}
-							onChange={setPriceFilter}
+							onChange={(value) => {
+								setPriceFilter(value);
+								resetPagination();
+							}}
 							className="w-full sm:w-36"
 							size="large"
 						>
@@ -120,14 +149,29 @@ export default function EventsSection() {
 					</div>
 
 					{/* events grid or empty state */}
-					{filteredEvents.length > 0 ? (
-						<CardsLayout
-							cardsContainerExtraClassNames="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
-							data={{
-								dataTitle: "event-cards",
-								information: filteredEvents,
-							}}
-						/>
+					{paginatedEvents.length > 0 ? (
+						<div className="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+							<CardsLayout
+								cardsContainerExtraClassNames="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+								data={{
+									dataTitle: "event-cards",
+									information: paginatedEvents,
+								}}
+							/>
+
+							{/* pagination */}
+							<div className="flex justify-center mt-4">
+								<Pagination
+									current={currentPage}
+									pageSize={pageSize}
+									total={filteredEvents.length}
+									onChange={handlePaginationChange}
+									showSizeChanger
+									pageSizeOptions={["6", "9", "12", "15"]}
+									responsive
+								/>
+							</div>
+						</div>
 					) : (
 						<div className="text-center py-16 sm:py-20">
 							<p className="text-4xl mb-4">🔍</p>

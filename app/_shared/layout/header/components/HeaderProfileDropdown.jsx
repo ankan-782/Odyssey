@@ -95,7 +95,7 @@ export default function HeaderProfileDropdown({
 										setIsSubMenuOpened
 									}
 									onNavItemClick={() => setIsOpen(false)}
-									extraClassNames="!text-primary hover:!text-neutral-bright-100 !bg-transparent hover:!bg-primary !border-transparent hover:!border-primary"
+									extraClassNames="text-primary hover:text-neutral-bright-100 bg-transparent hover:bg-primary border-transparent hover:border-primary"
 								/>
 							</div>
 						</motion.div>

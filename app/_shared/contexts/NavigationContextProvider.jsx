@@ -22,6 +22,7 @@ export default function NavigationContextProvider({ children }) {
 			navName: "Events",
 			path: "/events",
 			subNavItems: [],
+			excludePaths: ["/events/add", "/events/manage"],
 			action: null,
 		},
 		{
@@ -66,6 +67,7 @@ export default function NavigationContextProvider({ children }) {
 			navName: "Events",
 			path: "/events",
 			subNavItems: [],
+			excludePaths: ["/events/add", "/events/manage"],
 			action: null,
 		},
 		{

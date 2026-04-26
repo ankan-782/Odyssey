@@ -109,7 +109,7 @@ export default function FooterQuickLinks({
 										<CustomLink
 											buttonPath={path}
 											buttonExtraClassNames="block w-fit btn-text !text-neutral-bright-200 hover:!text-secondary text-start"
-											activeButtonExtraClassNames="text-secondary font-medium"
+											activeButtonExtraClassNames="!text-secondary !font-medium"
 											{...props}
 										>
 											{navName}

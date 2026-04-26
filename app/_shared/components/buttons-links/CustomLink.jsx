@@ -10,6 +10,7 @@ export default function CustomLink({
 	activeButtonExtraClassNames = "",
 	updateUrlOnScroll = false,
 	children,
+	excludePaths = [],
 	...rest
 }) {
 	const pathname = usePathname();
@@ -49,9 +50,13 @@ export default function CustomLink({
 		if (normalizedRoutePath === "/") {
 			activeRoute = pathname === normalizedRoutePath;
 		} else {
+			const isChildExcluded = excludePaths.some((p) =>
+				pathname.startsWith(p),
+			);
 			activeRoute =
 				pathname === normalizedRoutePath ||
-				pathname.startsWith(normalizedRoutePath + "/");
+				(!isChildExcluded &&
+					pathname.startsWith(normalizedRoutePath + "/"));
 		}
 	} else if (!isOnSamePage) {
 		// Different page - just check route match
@@ -66,9 +71,9 @@ export default function CustomLink({
 	return (
 		<Link
 			href={buttonPath}
-			className={`${
+			className={`${buttonExtraClassNames} ${
 				isActive ? activeButtonExtraClassNames : ""
-			} ${buttonExtraClassNames}`.trim()}
+			}`.trim()}
 			{...rest}
 		>
 			{children}

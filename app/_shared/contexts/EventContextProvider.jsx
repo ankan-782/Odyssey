@@ -1,23 +1,70 @@
 "use client";
-import { createContext, useState } from "react";
-import { EVENTS_DATA } from "../lib/events-data";
+import { createContext, useEffect, useState } from "react";
+import useApiCall from "../hooks/useApiCall";
+import {
+	addEventApi,
+	deleteEventApi,
+	getAllEvents,
+} from "../services/event-service";
 
 export const EventContext = createContext();
 
 export default function EventContextProvider({ children }) {
-	const [events, setEvents] = useState(EVENTS_DATA);
+	const [events, setEvents] = useState([]);
 
-	const addEvent = (eventData) => {
-		const newEvent = {
-			...eventData,
-			id: `evt-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+	const { callApi: fetchEvents, isLoading: isFetching } =
+		useApiCall(getAllEvents);
+	const { callApi: createEvent, isLoading: isAdding } =
+		useApiCall(addEventApi);
+	const { callApi: removeEvent, isLoading: isDeleting } =
+		useApiCall(deleteEventApi);
+
+	// Initial load
+	useEffect(() => {
+		const loadEvents = async () => {
+			try {
+				const data = await fetchEvents();
+				if (data) setEvents(data);
+			} catch (err) {
+				console.error("Failed to load events:", err);
+			}
 		};
-		setEvents((prev) => [newEvent, ...prev]);
-		return newEvent;
+		loadEvents();
+	}, []);
+
+	const slugify = (text) => {
+		return text
+			.toLowerCase()
+			.replace(/[^\w ]+/g, "")
+			.replace(/ +/g, "-");
 	};
 
-	const deleteEvent = (id) => {
-		setEvents((prev) => prev.filter((event) => event.id !== id));
+	const addEvent = async (eventData) => {
+		const slug = slugify(eventData.title);
+		const newEvent = {
+			...eventData,
+			id: `evt-${Date.now().toString().slice(-6)}`,
+			slug,
+		};
+
+		try {
+			const result = await createEvent(newEvent);
+			setEvents((prev) => [result, ...prev]);
+			return result;
+		} catch (err) {
+			console.error("Failed to add event:", err);
+			throw err;
+		}
+	};
+
+	const deleteEvent = async (id) => {
+		try {
+			await removeEvent(id);
+			setEvents((prev) => prev.filter((event) => event.id !== id));
+		} catch (err) {
+			console.error("Failed to delete event:", err);
+			throw err;
+		}
 	};
 
 	return (
@@ -26,6 +73,7 @@ export default function EventContextProvider({ children }) {
 				events,
 				addEvent,
 				deleteEvent,
+				isLoading: isFetching || isAdding || isDeleting,
 			}}
 		>
 			{children}
