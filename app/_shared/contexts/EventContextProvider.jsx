@@ -43,7 +43,6 @@ export default function EventContextProvider({ children }) {
 		const slug = slugify(eventData.title);
 		const newEvent = {
 			...eventData,
-			id: `evt-${Date.now().toString().slice(-6)}`,
 			slug,
 		};
 
